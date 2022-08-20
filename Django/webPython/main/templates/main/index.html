@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-wrap">
+        {% if tasks %}
+            {% for el in tasks %}
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">{{ el.title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="list-unstyled mt-3 mb-4">{{ el.task }}</h3>
+                        <form method="GET">
+                            <a class="w-100 btn btn-lg btn-outline-primary" href="./replace?id={{ el.id }}">Повторить</a>
+                        </form>
+                        <br>
+                        <form method="POST" action="{% url 'delete' %}">
+                            {% csrf_token %}
+                            <input type="hidden"  name="id" value="{{ el.id }}">
+                            <button type="submit" class="btn btn-primary">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+                <p>Задач нет</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+
+
+
+
+
